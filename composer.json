@@ -1,0 +1,37 @@
+{
+    "name": "jmf/spam-evaluation-shared",
+    "description": "Spam evaluation shared components",
+    "license": "mit",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Jean-Michel Feurprier"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "webmozart/assert": "^1.0"
+    },
+    "require-dev": {
+        "phing/phing": "^2.17",
+        "phpmd/phpmd": "^2.13",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^11.1",
+        "rector/rector": "^1.0",
+        "squizlabs/php_codesniffer": "^3.8"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Jmf\\SpamEvaluation\\Shared\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jmf\\SpamEvaluation\\Shared\\Tests\\": "tests/unit"
+        }
+    }
+}
