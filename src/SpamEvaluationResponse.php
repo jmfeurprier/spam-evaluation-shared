@@ -23,4 +23,14 @@ readonly class SpamEvaluationResponse
     {
         return $this->outcome;
     }
+
+    public function isLegit(): bool
+    {
+        return (SpamEvaluationOutcome::LEGIT === $this->outcome);
+    }
+
+    public function isSpam(): bool
+    {
+        return (SpamEvaluationOutcome::SPAM === $this->outcome);
+    }
 }

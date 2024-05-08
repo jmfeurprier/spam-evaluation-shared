@@ -2,7 +2,7 @@
 
 namespace Jmf\SpamEvaluation\Shared;
 
-enum SubmittedContentType: string
+enum SpamEvaluationSubmittedContentType: string
 {
     case EMAIL   = 'email';
     case MESSAGE = 'message';
