@@ -2,27 +2,24 @@
 
 namespace Jmf\SpamEvaluation\Shared;
 
+use Webmozart\Assert\Assert;
+
 readonly class SpamEvaluationRequest
 {
+    /**
+     * @param SpamEvaluationRequestPart[] $parts
+     */
     public function __construct(
-        private SubmittedContentType $type,
-        private string $content,
-        private string $language,
+        private iterable $parts,
     ) {
+        Assert::allIsInstanceOf($parts, SpamEvaluationRequestPart::class);
     }
 
-    public function getType(): SubmittedContentType
+    /**
+     * @return SpamEvaluationRequestPart[]
+     */
+    public function getParts(): iterable
     {
-        return $this->type;
-    }
-
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    public function getLanguage(): string
-    {
-        return $this->language;
+        return $this->parts;
     }
 }
