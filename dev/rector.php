@@ -2,47 +2,55 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
-use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
-use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
-use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
-use Rector\Set\ValueObject\SetList;
+use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
+use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
+use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\YieldDataProviderRector;
+use Rector\TypeDeclarationDocblocks\Rector\ClassMethod\DocblockReturnArrayFromDirectArrayInstanceRector;
 
-return static function (
-    RectorConfig $rectorConfig
-): void {
-    $rootPath = realpath(__DIR__ . '/..') . '/';
+$rootPath = realpath(__DIR__ . '/..') . '/';
 
-    $rectorConfig->cacheDirectory($rootPath . 'var/cache/rector');
-    $rectorConfig->containerCacheDirectory($rootPath . 'var/cache');
-
-    $rectorConfig->paths(
+return RectorConfig::configure()
+    ->withCache($rootPath . 'var/cache/rector')
+    ->withPaths(
         [
             $rootPath . 'src',
             $rootPath . 'tests',
-        ]
-    );
-    $rectorConfig->skip(
+        ],
+    )
+    ->withPhpSets()
+    ->withSkip(
         [
-            ArraySpreadInsteadOfArrayMergeRector::class,
             CatchExceptionNameMatchingTypeRector::class,
-            CountArrayToEmptyArrayComparisonRector::class,
-            EncapsedStringsToSprintfRector::class,
-            FlipTypeControlToUseExclusiveTypeRector::class,
-            SimplifyIfElseToTernaryRector::class,
-        ]
-    );
-    $rectorConfig->sets(
-        [
-            LevelSetList::UP_TO_PHP_83,
-            SetList::CODE_QUALITY,
-            SetList::CODING_STYLE,
-            SetList::DEAD_CODE,
-            SetList::EARLY_RETURN,
-        ]
-    );
-};
+            DocblockReturnArrayFromDirectArrayInstanceRector::class,
+            #EncapsedStringsToSprintfRector::class,
+            PreferPHPUnitThisCallRector::class,
+            #PreferPHPUnitThisCallRector::class,
+            RenameParamToMatchTypeRector::class,
+            RenamePropertyToMatchTypeRector::class,
+            #RenameVariableToMatchMethodCallReturnTypeRector::class,
+            #YieldDataProviderRector::class,
+        ],
+    )
+    ->withPreparedSets(
+        deadCode:                 true,
+        codeQuality:              true,
+        codingStyle:              true,
+        typeDeclarations:         true,
+        typeDeclarationDocblocks: true,
+        privatization:            true,
+        naming:                   true,
+        instanceOf:               true,
+        earlyReturn:              true,
+        carbon:                   true,
+        rectorPreset:             true,
+        phpunitCodeQuality:       true,
+        doctrineCodeQuality:      true,
+        symfonyCodeQuality:       true,
+        symfonyConfigs:           true,
+    )
+;
