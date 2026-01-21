@@ -9,16 +9,17 @@ use Webmozart\Assert\Assert;
 readonly class SpamEvaluationRequest
 {
     /**
-     * @param SpamEvaluationRequestPart[] $parts
+     * @param non-empty-array<SpamEvaluationRequestPart> $parts
      */
     public function __construct(
         private iterable $parts,
     ) {
+        Assert::notEmpty($parts);
         Assert::allIsInstanceOf($parts, SpamEvaluationRequestPart::class);
     }
 
     /**
-     * @return SpamEvaluationRequestPart[]
+     * @return non-empty-array<SpamEvaluationRequestPart>
      */
     public function getParts(): iterable
     {
