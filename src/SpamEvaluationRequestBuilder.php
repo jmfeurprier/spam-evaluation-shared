@@ -17,8 +17,10 @@ class SpamEvaluationRequestBuilder
         SpamEvaluationSubmittedContentType $type,
         string $content,
         string $language,
-    ): void {
+    ): self {
         $this->parts[] = new SpamEvaluationRequestPart($type, $content, $language);
+
+        return $this;
     }
 
     /**
